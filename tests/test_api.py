@@ -2,7 +2,7 @@ def test_create_address(client):
     response = client.post(
         "/addresses/",
         json={"name": "Central Park", "city": "New York",
-              "latitude": 40.7812, "longitude": -73.9665}
+              "latitude": 40.7812, 'street': "Sesame", "longitude": -73.9665}
     )
     assert response.status_code == 201
     data = response.json()
@@ -26,11 +26,11 @@ def test_get_address(client):
     post_response = client.post(
         "/addresses/",
         json={"name": "Office", "city": "London",
-              "latitude": 51.5, "longitude": -0.1}
+              "latitude": 51.5, "street": "Sesame", "longitude": -0.1}
     )
     address_id = post_response.json()["id"]
 
-    # Test: Retrieve it
+    # it seems like this doesn't exist initially
     response = client.get(f"/addresses/{address_id}")
     assert response.status_code == 200
     assert response.json()["name"] == "Office"
