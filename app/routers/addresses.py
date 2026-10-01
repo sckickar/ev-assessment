@@ -16,15 +16,23 @@ def create_address(address: AddressCreate, db: Session = Depends(get_db)):
 
 @router.get("/nearby", response_model=List[AddressResponse])
 def get_nearby_addresses(
-    latitude: float = Query(..., ge=-90.0, le=90.0,
+    latitude: float = Query(..., alias="lat", ge=-90.0, le=90.0,
                             description="Target latitude"),
-    longitude: float = Query(..., ge=-180.0, le=180.0,
+    longitude: float = Query(..., alias="lon", ge=-180.0, le=180.0,
                              description="Target longitude"),
-    radius_km: float = Query(..., gt=0,
+    radius_km: float = Query(..., alias="distance", gt=0,
                              description="Search radius in kilometers"),
     db: Session = Depends(get_db)
 ):
     return crud.get_addresses_within_radius(db, lat=latitude, lon=longitude, radius_km=radius_km)
+
+
+@router.get("/{address_id}", response_model=AddressResponse)
+def get_address(address_id: int, db: Session = Depends(get_db)):
+    db_address = crud.get_address_by_id(db, address_id=address_id)
+    if not db_address:
+        raise HTTPException(status_code=404, detail="Address not found")
+    return db_address
 
 
 @router.put("/{address_id}", response_model=AddressResponse)
