@@ -1,12 +1,13 @@
 from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base
 
 class Address(Base):
     __tablename__ = 'addresses'
     
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str | None] = mapped_column(index=True)
     street = Column(String)
     city = Column(String)
-    latitude = Column(Float, nullable=False)
-    longitude = Column(Float, nullable=False)
+    latitude: Mapped[float] = mapped_column(nullable=False)
+    longitude: Mapped[float] = mapped_column(nullable=False)

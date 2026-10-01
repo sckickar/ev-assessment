@@ -2,6 +2,8 @@ import logging
 from fastapi import FastAPI
 from app.database import engine, Base
 
+from app.routers import addresses
+
 # Centralized Logging Configuration
 logging.basicConfig(
     level=logging.INFO,
@@ -18,6 +20,8 @@ app = FastAPI(
     description="A modular FastAPI app to manage addresses and find nearby locations.",
     version="1.0.0"
 )
+
+app.include_router(addresses.router)
 
 @app.get("/")
 def health_check():
