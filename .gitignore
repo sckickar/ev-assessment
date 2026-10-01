@@ -1,0 +1,30 @@
+# environment variables and virtual environment
+venv/
+env/
+.env
+
+# the database file
+*.db
+address_book.db
+*.sqlite3
+
+# bloatware
+__pycache__/
+*.py[cod]
+*$py.class
+
+# from ide and editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# un needed (mostly os related) 
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.docker
